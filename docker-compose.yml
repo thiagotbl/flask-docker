@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  rabbit:
+    image: 'rabbitmq:3.8.3-management'
+    ports:
+      - '15672:15672'
+      - '5672:5672'
+
+  app:
+    build:
+      context: .
+    image: flask-docker
+    ports:
+      - '5000:5000'
+    volumes:
+      - ./src:/app/src
+    depends_on:
+      - rabbit

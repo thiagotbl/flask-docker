@@ -1,8 +1,4 @@
-FROM ubuntu:18.04
-
-RUN apt-get update && \
-    apt-get install python-pip -y && \
-    pip install -U pip
+FROM python:3.8.3
 
 WORKDIR /app
 
@@ -12,4 +8,4 @@ RUN pip install -r requirements.txt
 
 COPY src ./src
 
-CMD ["python", "src/app.py"]
+CMD ["python3", "-u", "src/app.py"]
