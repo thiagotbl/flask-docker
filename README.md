@@ -1,6 +1,6 @@
-# Docker Flask Rabbit Setup
+# Similar Candidates Proof of Concept
 
-Just a simple setup for a Flask app with a RabbitMQ consumer using Docker.
+This project use [Flask](https://flask.palletsprojects.com/en/1.1.x/), [RabbitMQ](https://www.rabbitmq.com/), and [Turi Create](https://github.com/apple/turicreate) to provide a similar candidates endpoint.
 
 To start the app for development, just use docker-compose:
 
