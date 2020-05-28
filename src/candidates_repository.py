@@ -34,7 +34,10 @@ class CandidatesRepository(metaclass=SingletonMeta):
         self.start()
 
     def start(self) -> None:
-        self._model = self._train_model()
+        if path.exists('jarvis.model'):
+            self._model = turicreate.load_model('jarvis.model')
+        else:
+            self._model = self._train_model_and_persist()
 
     def get_similar(self, id: int) -> dict:
         candidates = self._model.recommend_from_interactions([id], 10)
@@ -48,13 +51,15 @@ class CandidatesRepository(metaclass=SingletonMeta):
 
         return result
 
-    def _train_model(self):
+    def _train_model_and_persist(self):
         # TODO read data from S3
         data = turicreate.SFrame(self._data_path())
 
-        return turicreate.recommender.item_content_recommender.create(
+        model = turicreate.recommender.item_content_recommender.create(
             data, 'candidate_id', weights=self._weights
         )
+        model.save('jarvis.model')
+        return model
 
     def _data_path(self):
         basepath = path.dirname(__file__)
